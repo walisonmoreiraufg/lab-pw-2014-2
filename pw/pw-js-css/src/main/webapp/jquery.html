@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>JQuery</title>
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<script src="js/jquery-2.1.1.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<!-- Plugin do JQuery -->
+<script src="js/bootbox.min.js"></script>
+</head>
+<body>
+	<p>
+		<a class="alert" href=#>Hello!</a>
+	</p>
+	<script>
+		$(document).on("click", ".alert", function(e) {
+			bootbox.alert("Hello world!");
+		});
+	</script>
+</body>
+</html>
