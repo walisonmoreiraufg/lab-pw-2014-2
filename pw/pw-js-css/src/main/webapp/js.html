@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Alô Mundo!</title>
+	  <!-- 1º execução. -->
+    <script type="text/javascript">
+    	alert("Alô mundo no cabeçalho.");
+    </script>
+  </head>
+  <!-- 5º execução. -->
+  <body onload="alert('Alô mundo no onload!')">
+    <h1>Alô Mundo!</h1>
+    <input id="campo1">
+    <button onclick="alert('Alô mundo no onclick do botão!')">Executar JavaScript</button>
+    <button onclick="alert('Campo 1 = ' + (document.getElementById('campo1').value * 5))">Valor do Campo 1</button>
+    <button onclick="votarNaDilma()">Valor do Campo 1</button>
+	  <!-- 2º execução. -->
+    <script type="text/javascript">
+    	alert("Alô mundo.");
+    </script>
+	  <!-- 3º execução. -->
+    <script type="text/javascript" src="js/pw-js-css.js"></script>
+	  <!-- 4º execução. -->
+    <script type="text/javascript">
+    	funcaoAloMundo();
+    	alert("1 + 1 = " + (1 + 1));
+    </script>
+  </body>
+</html>
