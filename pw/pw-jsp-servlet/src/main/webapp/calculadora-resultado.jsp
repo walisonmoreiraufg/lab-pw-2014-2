@@ -28,6 +28,12 @@
 	}
 	out.print(resultado);
     %></h2>
+    
+    <%if (operacao.equals("%")) {%>
+			<div class="alert alert-danger" role="alert">
+	      <strong>Opa!</strong> O operador <strong>%  (porcentagem)</strong> não funciona ainda!
+	    </div>
+		<%}%>
     <a href="calculadora-formulario.html">Voltar</a>
   </body>
 </html>
