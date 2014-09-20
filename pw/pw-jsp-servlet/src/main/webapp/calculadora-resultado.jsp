@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<%@page import="java.text.DecimalFormat"%>
 <html>
 	<head>
 		<title>PW - JSP e Servlet - Calculadora</title>
@@ -26,7 +27,10 @@
 	} else if (operacao.equals("/")) {
     	resultado = operador1Float / operador2Float;
 	}
-	out.print(resultado);
+
+	DecimalFormat df = new DecimalFormat("0.00");
+	
+	out.print(df.format(resultado));
     %></h2>
     
     <%if (operacao.equals("%")) {%>
