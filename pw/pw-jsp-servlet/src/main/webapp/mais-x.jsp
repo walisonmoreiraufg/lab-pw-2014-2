@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>PW - JSP e Servlet - Mais X</title>
+		<title>PW - JSP e Servlet - Mais X (com sessão)</title>
 		<meta charset="utf-8">
 		<!-- CSS do Bootstrap. -->
 		<link rel="stylesheet" href="css/bootstrap.min.css">
@@ -9,7 +9,7 @@
 		<link rel="stylesheet" type="text/css" href="css/pw-jsp-servlet.css">
   </head>
 	<body>
-		<h1>Mais X (Sessões)</h1>
+		<h1>Mais X (com sessão)</h1>
 		<form>
 			X: <input type="text" name="numero">
 			<button>Mais X</button>
