@@ -11,7 +11,7 @@
   </head>
   <body>
     <h1>Resultado</h1>
-    <h2><%
+    <h2>${param.operador1} ${param.operacao} ${param.operador2} = <%
 	String operador1 = request.getParameter("operador1");
   float operador1Float = Float.parseFloat(operador1);
 	String operacao = request.getParameter("operacao");

@@ -33,27 +33,16 @@ public class CalculadoraServlet extends HttpServlet {
 
 		if (acao != null && acao.equals("calcular")) {
 			
-			String operador1 = request.getParameter("operador1");
-			float operador1Float = Float.parseFloat(operador1);
-			String operacao = request.getParameter("operacao");
-			String operador2 = request.getParameter("operador2");
-			float operador2Float = Float.parseFloat(operador2);
-			float resultadoFloat = 0;
-			if (operacao.equals("+")) {
-				resultadoFloat = operador1Float + operador2Float;
-			} else if (operacao.equals("-")) {
-				resultadoFloat = operador1Float - operador2Float;
-			} else if (operacao.equals("*")) {
-				resultadoFloat = operador1Float * operador2Float;
-			} else if (operacao.equals("/")) {
-				resultadoFloat = operador1Float / operador2Float;
-			}
-	
-			DecimalFormat df = new DecimalFormat("0.00");
-			String resultado = df.format(resultadoFloat);
+			Calculo c = new Calculo();
+			
+			c.setOperador1(Double.parseDouble(request.getParameter("operador1")));
+			c.setOperacao(request.getParameter("operacao"));
+			c.setOperador2(Double.parseDouble(request.getParameter("operador2")));
+			
+			c.calcular();
 			
 			//Define um objeto no request que pode ser usado no JSP.
-			request.setAttribute("resultado", resultado);
+			request.setAttribute("resultado", c.getResultadoFormatado());
 
 		}
 		// Pedir para o JSP mostrar o resultado.
