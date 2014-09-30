@@ -13,7 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 public class CalculadoraServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	@Override
+	/**
+	 * Será chamado ao clicar no link "http://.../calculadora".
+	 * Os links (tag "<a href="endereco"></a>") geram requisições HTTP com método "GET".
+	 */
 	protected void doGet(
 			HttpServletRequest request,
 			HttpServletResponse response)
@@ -24,6 +27,10 @@ public class CalculadoraServlet extends HttpServlet {
 			.forward(request, response);
 	}
 	
+	
+	/**
+	 * Será chamado na submissão do formulário com método HTTP igual a "POST".
+	 */
 	protected void doPost(
 			HttpServletRequest request,
 			HttpServletResponse response)
