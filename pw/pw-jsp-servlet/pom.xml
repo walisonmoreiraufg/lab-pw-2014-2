@@ -25,4 +25,14 @@
 		</plugins>
 	</build>
 
+	<dependencies>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1.0</version>
+			<!-- Essa biblioteca não será "enviada" para o servidor de aplicação. -->
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
 </project>

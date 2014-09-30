@@ -16,7 +16,7 @@
 			out.print("Aqui é Java");
 		%></p>
 		<p><%
-			out.print("Agora é " + new java.util.Date());
+			out.print("Agora é: " + new java.util.Date());
 		%></p>
 	</body>
 </html>
