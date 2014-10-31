@@ -38,7 +38,7 @@ public class TesteDeBancoDeDados {
 		//URL equivalente em MySQL.
 		//String url = "jdbc:mysql://localhost/banco-de-dados";
 		try {
-			//Conexão com o banco de dados.
+			//Obter uma conexão com o banco de dados.
 			conexao = DriverManager.getConnection(url);
 		} catch(Exception e) {
 			throw new RuntimeException("Erro ao obter uma conexão com o banco de dados.", e);
