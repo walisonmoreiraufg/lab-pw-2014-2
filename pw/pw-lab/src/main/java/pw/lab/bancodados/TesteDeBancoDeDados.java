@@ -31,6 +31,7 @@ public class TesteDeBancoDeDados {
 
 	private void obterConexaoComOBancoDeDados() {
 		System.out.println("  Obtendo conexão com o banco de dados...");
+		//URL de conexão com o banco de dados Derby.
 		String url = "jdbc:derby:banco-de-dados;create=true";
 		//URL de conexão com o banco de dados Derby em memória.
 		//String url = "jdbc:derby:memory:banco-de-dados;create=true";
