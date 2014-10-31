@@ -30,8 +30,14 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.1.0</version>
-			<!-- Essa biblioteca não será "enviada" para o servidor de aplicação. -->
+			<!-- Essa biblioteca não será "distribuída" com a aplicação web. -->
 			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<!-- Para fazer upload de arquivos. -->
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.3.1</version>
 		</dependency>
 	</dependencies>
 
