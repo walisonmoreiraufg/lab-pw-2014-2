@@ -1,6 +1,8 @@
 package pw.lab.bancodados;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
 
 /**
  * Classe para testes com um banco de dados.
@@ -29,10 +31,14 @@ public class TesteDeBancoDeDados {
 
 	private void obterConexaoComOBancoDeDados() {
 		System.out.println("  Obtendo conexão com o banco de dados...");
+		String url = "jdbc:derby:banco-de-dados;create=true";
 		//URL de conexão com o banco de dados Derby em memória.
-		String url = "jdbc:derby:memory:banco-de-dados;create=true";
+		//String url = "jdbc:derby:memory:banco-de-dados;create=true";
+		//URL equivalente em MySQL.
+		//String url = "jdbc:mysql://localhost/banco-de-dados";
 		try {
-			//TODO Implemente aqui o código para obter uma conexão com o banco de dados.
+			//Conexão com o banco de dados.
+			conexao = DriverManager.getConnection(url);
 		} catch(Exception e) {
 			throw new RuntimeException("Erro ao obter uma conexão com o banco de dados.", e);
 		}
@@ -49,7 +55,8 @@ public class TesteDeBancoDeDados {
 		"  constraint pk_usuario primary key (id) " +
 		")";
 		try {
-			//TODO Implemente aqui o código para criar a tabela de usuário.
+			//Criar a tabela de usuário.
+			conexao.createStatement().execute(sql);
 		} catch(Exception e) {
 			throw new RuntimeException("Erro ao criar a tabela de usuário.", e);
 		}
@@ -57,16 +64,24 @@ public class TesteDeBancoDeDados {
 
 	private void incluirUsuarios() {
 		System.out.println("  Incluindo usuários...");
-		String sql = "insert into usuario (id, nome, identificacao, senha) values (1, 'Usuario 1', 'usuario1', '123')";
+		String sql = "insert into usuario "
+				+ "(id, nome, identificacao, senha) "
+				+ "values "
+				+ "(1, 'Usuario 1', 'usuario1', '123')";
 		try {
-			//TODO Implemente aqui o código para incluir o Usuario 1.
+			//Incluir o Usuario 1.
+			conexao.createStatement().execute(sql);
 		} catch(Exception e) {
 			throw new RuntimeException("Erro ao incluir o Usuario 1.", e);
 		}
 
-		sql = "insert into usuario (id, nome, identificacao, senha) values (2, 'Usuario 2', 'usuario2', '456')";
+		sql = "insert into usuario "
+				+ "(id, nome, identificacao, senha) "
+				+ "values "
+				+ "(2, 'Usuario 2', 'usuario2', '456')";
 		try {
-			//TODO Implemente aqui o código para incluir o Usuario 2.
+			//Incluir o Usuario 2.
+			conexao.createStatement().execute(sql);
 		} catch(Exception e) {
 			throw new RuntimeException("Erro ao incluir o Usuario 2.", e);
 		}
@@ -76,9 +91,17 @@ public class TesteDeBancoDeDados {
 		System.out.println("  Mostrando usuarios...");
 		String sql = "select id, nome, identificacao from usuario";
 		try {
-			//TODO Implemente aqui o código para mostrar os usuários da tabela.
-			//...
-			//System.out.println("    " + id + " - " + identificacao + " - " + nome);
+			//Mostrar os usuários da tabela.
+			ResultSet rs = conexao.createStatement().executeQuery(sql);
+			while(rs.next()) {
+				int id = rs.getInt("id");
+				String identificacao = rs.getString("identificacao");
+				String nome = rs.getString("nome");
+				System.out.println("    " +
+						id + " - " +
+						identificacao + " - " +
+						nome);
+			}
 			//...
 		} catch(Exception e) {
 			throw new RuntimeException("Erro ao mostrar os usuários da tabela.", e);
@@ -87,16 +110,24 @@ public class TesteDeBancoDeDados {
 	
 	private void alterarUsuarios() {
 		System.out.println("  Alterando usuários...");
-		String sql = "update usuario set nome = 'José Maria', identificacao = 'jose' where id = 1";
+		String sql = "update usuario set "
+				+ "nome = 'José Maria', "
+				+ "identificacao = 'jose' "
+				+ "where "
+				+ "id = 1";
 		try {
-			//TODO Implemente aqui o código para alterar o nome do Usuario 1.
+			//Alterar o nome do Usuario 1.
+			int count = conexao.createStatement().executeUpdate(sql);
+			System.out.println("    " + count + " registros alterados.");
 		} catch(Exception e) {
 			throw new RuntimeException("Erro ao alterar o nome do Usuario 1.", e);
 		}
 
 		sql = "update usuario set nome = 'Maria José', identificacao = 'maria' where id = 2";
 		try {
-			//TODO Implemente aqui o código para alterar o nome do Usuario 2.
+			//Alterar o nome do Usuario 2.
+			int count = conexao.createStatement().executeUpdate(sql);
+			System.out.println("    " + count + " registros alterados.");
 		} catch(Exception e) {
 			throw new RuntimeException("Erro ao alterar o nome do Usuario 2.", e);
 		}
@@ -106,7 +137,9 @@ public class TesteDeBancoDeDados {
 		System.out.println("  Apagando usuários...");
 		String sql = "delete from usuario";
 		try {
-			//TODO Implemente aqui o código para apagar os usuários.
+			//Apagar os usuários.
+			int count = conexao.createStatement().executeUpdate(sql);
+			System.out.println("    " + count + " registros apagados.");
 		} catch(Exception e) {
 			throw new RuntimeException("Erro ao apagar os usuários.", e);
 		}
@@ -116,7 +149,8 @@ public class TesteDeBancoDeDados {
 		System.out.println("  Apagando tabela de usuário...");
 		String sql = "drop table usuario";
 		try {
-			//TODO Implemente aqui o código para apagar a tabela de usuário.
+			//Apagar a tabela de usuário.
+			conexao.createStatement().execute(sql);
 		} catch(Exception e) {
 			throw new RuntimeException("Erro ao apagar a tabela de usuário.", e);
 		}
@@ -125,7 +159,8 @@ public class TesteDeBancoDeDados {
 	private void fecharConexaoComOBancoDeDados() {
 		System.out.println("  Fechando conexão com o banco de dados...");
 		try {
-			//TODO Implemente aqui o código para fechar conexão com o banco de dados.
+			//Fechar conexão com o banco de dados.
+			conexao.close();
 		} catch(Exception e) {
 			throw new RuntimeException("Erro ao fechar conexão com o banco de dados.", e);
 		}
