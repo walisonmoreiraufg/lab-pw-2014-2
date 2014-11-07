@@ -3,7 +3,7 @@ package pw.lab.bancodados;
 import java.sql.Statement;
 
 /**
- * Classe para testes com um banco de dados.
+ * Classe para teste de banco de dados.
  *
  * @author Walison
  */
@@ -22,7 +22,7 @@ public class TesteDeBancoDeDados {
 		testeDb.alterarUsuarios();
 		testeDb.bancoDeDados.mostrarUsuarios();
 		testeDb.bancoDeDados.apagarUsuarios();
-		testeDb.bancoDeDados.apagarTabelaDeUsuario();
+		//testeDb.bancoDeDados.apagarTabelaDeUsuario();
 		testeDb.bancoDeDados.fecharConexaoComOBancoDeDados();
 		System.out.println("Fim do teste de banco de dados.");
 	}

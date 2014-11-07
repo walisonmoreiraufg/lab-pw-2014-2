@@ -1,51 +1,43 @@
 package pw.lab.bancodados.transacao;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
+import pw.lab.bancodados.BancoDeDados;
 
-/**
- * Atenção! Essa classe depende da classe 
- * @author Walison
- *
- */
 public class TesteDeTransacaoIncluirUsuarios {
 	
-	private Connection conexao;
-	
-	public static void main(String[] args) throws Exception {
-		System.out.println("Início.");
-		TesteDeTransacaoIncluirUsuarios testeDb = new TesteDeTransacaoIncluirUsuarios();
-		testeDb.obterConexaoComOBancoDeDados();
-		
-		//Iniciar transação.
-		testeDb.conexao.setAutoCommit(false);
-		
-		try {
-			testeDb.incluirUsuario1();
-			if (true) { //Apenar para "enganar" o compilador.
-				throw new RuntimeException("Acabou a energia"); //Simula um problema inesperado.
-			}
-			testeDb.incluirUsuario2();
+	private BancoDeDados bancoDeDados = BancoDeDados.getInstance();
 
-			//Efetivar alterações no banco de dados.
-			testeDb.conexao.commit();
-		} catch (Exception e) {
-			//Desfazer alterações no banco de dados.
-			testeDb.conexao.rollback();
-		}
+	public static void main(String[] args) {
+		System.out.println("Início");
+		TesteDeTransacaoIncluirUsuarios teste = new TesteDeTransacaoIncluirUsuarios();
+		teste.bancoDeDados.abrirConexao();
 
-		testeDb.fecharConexaoComOBancoDeDados();
+		teste.incluirUsuarios();
+
+		teste.bancoDeDados.fecharConexaoComOBancoDeDados();
 		System.out.println("Fim");
 	}
 
-	private void obterConexaoComOBancoDeDados() {
-		System.out.println("  Obtendo conexão com o banco de dados...");
-		String url = "jdbc:derby:banco-de-dados;create=true";
+	private void incluirUsuarios() {
 		try {
-			conexao = DriverManager.getConnection(url);
+		
+			//Iniciar transação.
+			bancoDeDados.getConexao().setAutoCommit(false);
+			
+			try {
+				incluirUsuario1();
+				if (true) { //Apenar para "enganar" o compilador.
+					throw new RuntimeException("Acabou a energia"); //Simula um problema inesperado.
+				}
+				incluirUsuario2();
+	
+				//Efetivar alterações no banco de dados.
+				bancoDeDados.getConexao().commit();
+			} catch (Exception e) {
+				//Desfazer alterações no banco de dados.
+				bancoDeDados.getConexao().rollback();
+			}
 		} catch(Exception e) {
-			throw new RuntimeException("Erro ao obter uma conexão com o banco de dados.", e);
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -56,7 +48,7 @@ public class TesteDeTransacaoIncluirUsuarios {
 				+ "values "
 				+ "(1, 'Usuario 1', 'usuario1', '123')";
 		try {
-			conexao.createStatement().execute(sql);
+			bancoDeDados.getConexao().createStatement().execute(sql);
 		} catch(Exception e) {
 			throw new RuntimeException("Erro ao incluir o Usuario 1.", e);
 		}
@@ -69,37 +61,9 @@ public class TesteDeTransacaoIncluirUsuarios {
 				+ "values "
 				+ "(2, 'Usuario 2', 'usuario2', '456')";
 		try {
-			conexao.createStatement().execute(sql);
+			bancoDeDados.getConexao().createStatement().execute(sql);
 		} catch(Exception e) {
 			throw new RuntimeException("Erro ao incluir o Usuario 2.", e);
-		}
-	}
-
-	private void mostrarUsuarios() {
-		System.out.println("  Mostrando usuarios...");
-		String sql = "select id, nome, identificacao from usuario";
-		try {
-			ResultSet rs = conexao.createStatement().executeQuery(sql);
-			while(rs.next()) {
-				int id = rs.getInt("id");
-				String identificacao = rs.getString("identificacao");
-				String nome = rs.getString("nome");
-				System.out.println("    " +
-						id + " - " +
-						identificacao + " - " +
-						nome);
-			}
-		} catch(Exception e) {
-			throw new RuntimeException("Erro ao mostrar os usuários da tabela.", e);
-		}
-	}
-	
-	private void fecharConexaoComOBancoDeDados() {
-		System.out.println("  Fechando conexão com o banco de dados...");
-		try {
-			conexao.close();
-		} catch(Exception e) {
-			throw new RuntimeException("Erro ao fechar conexão com o banco de dados.", e);
 		}
 	}
 }
