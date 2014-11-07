@@ -1,7 +1,6 @@
 package pw.lab.bancodados;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
+import java.sql.Statement;
 
 /**
  * Classe para testes com um banco de dados.
@@ -9,9 +8,6 @@ import java.sql.DriverManager;
  * @author Walison
  */
 public class TesteDeBancoDeDados {
-
-	//Referência para uma conexão com o banco de dados.
-	private Connection conexao;
 
 	private BancoDeDados bancoDeDados = BancoDeDados.getInstance();
 
@@ -32,14 +28,16 @@ public class TesteDeBancoDeDados {
 	}
 
 	private void incluirUsuarios() {
-		System.out.println("  Incluindo usuários...");
+		System.out.println("Incluindo usuários...");
 		String sql = "insert into usuario "
 				+ "(id, nome, identificacao, senha) "
 				+ "values "
 				+ "(1, 'Usuario 1', 'usuario1', '123')";
 		try {
 			//Incluir o Usuario 1.
-			conexao.createStatement().execute(sql);
+			Statement stmt = bancoDeDados.getConexao().createStatement();
+			stmt.execute(sql);
+			stmt.close();
 		} catch(Exception e) {
 			throw new RuntimeException("Erro ao incluir o Usuario 1.", e);
 		}
@@ -50,14 +48,16 @@ public class TesteDeBancoDeDados {
 				+ "(2, 'Usuario 2', 'usuario2', '456')";
 		try {
 			//Incluir o Usuario 2.
-			conexao.createStatement().execute(sql);
+			Statement stmt = bancoDeDados.getConexao().createStatement();
+			stmt.execute(sql);
+			stmt.close();
 		} catch(Exception e) {
 			throw new RuntimeException("Erro ao incluir o Usuario 2.", e);
 		}
 	}
 
 	private void alterarUsuarios() {
-		System.out.println("  Alterando usuários...");
+		System.out.println("Alterando usuários...");
 		String sql = "update usuario set "
 				+ "nome = 'José Maria', "
 				+ "identificacao = 'jose' "
@@ -65,8 +65,10 @@ public class TesteDeBancoDeDados {
 				+ "id = 1";
 		try {
 			//Alterar o nome do Usuario 1.
-			int count = conexao.createStatement().executeUpdate(sql);
-			System.out.println("    " + count + " registros alterados.");
+			Statement stmt = bancoDeDados.getConexao().createStatement();
+			int count = stmt.executeUpdate(sql);
+			stmt.close();
+			System.out.println(count + " registros alterados.");
 		} catch(Exception e) {
 			throw new RuntimeException("Erro ao alterar o nome do Usuario 1.", e);
 		}
@@ -74,8 +76,10 @@ public class TesteDeBancoDeDados {
 		sql = "update usuario set nome = 'Maria José', identificacao = 'maria' where id = 2";
 		try {
 			//Alterar o nome do Usuario 2.
-			int count = conexao.createStatement().executeUpdate(sql);
-			System.out.println("    " + count + " registros alterados.");
+			Statement stmt = bancoDeDados.getConexao().createStatement();
+			int count = stmt.executeUpdate(sql);
+			stmt.close();
+			System.out.println(count + " registros alterados.");
 		} catch(Exception e) {
 			throw new RuntimeException("Erro ao alterar o nome do Usuario 2.", e);
 		}

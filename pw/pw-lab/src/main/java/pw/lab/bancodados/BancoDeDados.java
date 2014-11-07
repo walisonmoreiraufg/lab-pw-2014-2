@@ -3,6 +3,8 @@ package pw.lab.bancodados;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLSyntaxErrorException;
+import java.sql.Statement;
 
 public class BancoDeDados {
 	
@@ -46,10 +48,15 @@ public class BancoDeDados {
 				+ "  constraint pk_usuario primary key (id) " + ")";
 		try {
 			// Criar a tabela de usuário.
-			conexao.createStatement().execute(sql);
+			Statement stmt = conexao.createStatement();
+			stmt.execute(sql);
+			stmt.close();
 		} catch (Exception e) {
-			System.out.println("Opa! Deu erro. O programa vai continuar mas olha aí pra você ver o que pode ter sido.");
-			e.printStackTrace(System.out);
+			if (e instanceof SQLSyntaxErrorException) {
+				System.out.println("Opa! " + e.getMessage());
+			} else {
+				throw new RuntimeException("Erro ao criar tabela de usuário.", e);
+			}
 		}
 	}
 
@@ -58,7 +65,8 @@ public class BancoDeDados {
 		String sql = "select id, nome, identificacao from usuario";
 		try {
 			//Mostrar os usuários da tabela.
-			ResultSet rs = conexao.createStatement().executeQuery(sql);
+			Statement stmt = conexao.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
 			while(rs.next()) {
 				int id = rs.getInt("id");
 				String identificacao = rs.getString("identificacao");
@@ -68,7 +76,8 @@ public class BancoDeDados {
 						identificacao + " - " +
 						nome);
 			}
-			//...
+			rs.close();
+			stmt.close();
 		} catch(Exception e) {
 			throw new RuntimeException("Erro ao mostrar os usuários da tabela.", e);
 		}
@@ -79,7 +88,9 @@ public class BancoDeDados {
 		String sql = "delete from usuario";
 		try {
 			// Apagar os usuários.
-			int count = conexao.createStatement().executeUpdate(sql);
+			Statement stmt = conexao.createStatement();
+			int count = stmt.executeUpdate(sql);
+			stmt.close();
 			System.out.println(count + " registros apagados.");
 		} catch (Exception e) {
 			throw new RuntimeException("Erro ao apagar os usuários.", e);
@@ -91,10 +102,15 @@ public class BancoDeDados {
 		String sql = "drop table usuario";
 		try {
 			// Apagar a tabela de usuário.
-			conexao.createStatement().execute(sql);
+			Statement stmt = conexao.createStatement();
+			stmt.execute(sql);
+			stmt.close();
 		} catch (Exception e) {
-			System.out.println("Opa! Deu erro. O programa vai continuar mas olha aí pra você ver o que pode ter sido.");
-			e.printStackTrace(System.out);
+			if (e instanceof SQLSyntaxErrorException) {
+				System.out.println("Opa! " + e.getMessage());
+			} else {
+				throw new RuntimeException("Erro ao apagar tabela de usuário.", e);
+			}
 		}
 	}
 
