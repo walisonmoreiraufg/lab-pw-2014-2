@@ -1,0 +1,89 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>br.ufg.inf.pw</groupId>
+  <artifactId>pw-jsf</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <!-- Tipo de projeto. "war" significa projeto web. -->
+  <packaging>war</packaging>
+  
+  <properties>
+    <!-- Para usar caracteres especiais. -->
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <!-- Para usar Java 1.7. -->
+    <maven.compiler.source>1.7</maven.compiler.source>
+    <maven.compiler.target>1.7</maven.compiler.target>
+  </properties>
+
+  <build>
+    <plugins>
+      <!-- Para executar o Tomcat 7. -->
+      <plugin>
+        <groupId>org.apache.tomcat.maven</groupId><artifactId>tomcat7-maven-plugin</artifactId><version>2.2</version>
+        <configuration>
+          <port>9090</port>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <dependencies>
+    <!-- Para Servlet. -->
+    <dependency>
+      <groupId>org.apache.tomcat</groupId>
+      <artifactId>tomcat-servlet-api</artifactId>
+      <version>7.0.47</version>
+      <scope>provided</scope>
+    </dependency>
+    <!-- Para JSTL -->
+    <dependency>
+      <groupId>org.glassfish.web</groupId>
+      <artifactId>javax.servlet.jsp.jstl</artifactId>
+      <version>1.2.2</version>
+      <exclusions>
+        <exclusion>
+          <artifactId>servlet-api</artifactId>
+          <groupId>javax.servlet</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>jsp-api</artifactId>
+          <groupId>javax.servlet.jsp</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <!-- Para usar o abanco de dados Derby embutido na aplicação. -->
+    <dependency>
+      <groupId>org.apache.derby</groupId>
+      <artifactId>derby</artifactId>
+      <version>10.10.1.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.derby</groupId>
+      <artifactId>derbynet</artifactId>
+      <version>10.10.1.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.derby</groupId>
+      <artifactId>derbyclient</artifactId>
+      <version>10.10.1.1</version>
+    </dependency>
+    <!-- Para usar JPA com Hibernate. -->
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-entitymanager</artifactId>
+      <version>4.3.1.Final</version>
+    </dependency>
+    <!-- Para usar o pool de conexões C3P0. -->
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-c3p0</artifactId>
+      <version>4.3.1.Final</version>
+    </dependency>
+    <!-- Para usar JSF. -->
+    <dependency>
+      <groupId>org.glassfish</groupId>
+      <artifactId>javax.faces</artifactId>
+      <version>2.2.5</version>
+    </dependency>
+  </dependencies>
+</project>

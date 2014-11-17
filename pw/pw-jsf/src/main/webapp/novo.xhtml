@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"    
+      xmlns:h="http://java.sun.com/jsf/html">
+
+	<h:head>
+		<title>Alunos / Cadastro / Novo</title>
+	</h:head>
+	<h:body>
+		<h1>
+			<a href="index.jsf">Alunos</a> / <a href="cadastro.jsf">Cadastro</a> / Novo
+		</h1>
+		<h:form>
+			<h:panelGrid columns="2">
+				Código: <h:inputText />
+				Nome: <h:inputText />
+				Idade: <h:inputText />
+				Sexo: <h:inputText />
+				Curso: <h:inputText />
+				<h:commandButton value="Ok" action="#{listagemBean.salvar}" />
+				<h:commandButton value="Cancelar" />
+			</h:panelGrid>
+		</h:form>
+	</h:body>
+</html>
